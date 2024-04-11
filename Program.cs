@@ -38,6 +38,19 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<BrickDbContext>();
 builder.Services.AddControllersWithViews();
 
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Default Password settings.
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 12;
+    options.Password.RequiredUniqueChars = 1;
+});
+
+
+
 builder.Services.AddScoped<IBrickRepository, EFBrickRepository>();
 builder.Services.AddTransient<ColorViewComponent>();
 
@@ -51,6 +64,7 @@ builder.Services.AddHsts(options =>
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
+
 
 var app = builder.Build();
 
