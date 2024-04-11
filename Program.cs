@@ -41,11 +41,16 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IBrickRepository, EFBrickRepository>();
 builder.Services.AddTransient<ColorViewComponent>();
 
+builder.Services.AddRazorPages();
+
 builder.Services.AddHsts(options =>
 {
     options.Preload = true;
     options.IncludeSubDomains = true;
 });
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -69,6 +74,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseCookiePolicy();
 
+app.UseSession();
+
 app.UseRouting();
 
 app.UseAuthorization();
@@ -76,6 +83,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.MapRazorPages();
 
 app.Run();
