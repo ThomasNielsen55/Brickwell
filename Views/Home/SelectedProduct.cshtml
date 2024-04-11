@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Product
+
+<div class="container">
+    <div class="row" style="color:white;">
+        <div class="col-1" style="background-color: #272D6D;"></div>
+        <div class="col-8" style="background-color: #272D6D;">
+            <br/>
+            <h1>@Model.Name</h1>
+        </div>
+        <div class="col-3" style="background-color: #272D6D;">
+            <h3>@Model.Category <br />(@Model.Year)</h3>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-7">
+            <img src=@Model.ImgLink class="img-fluid" alt=$"Image of {@Model.Year} {@Model.Name}" />
+        </div>
+        <div class="col-5">
+            <div style="height: 500px; overflow-y: auto; background-color: #F3F3FC; border-radius: 20px; padding: 5px">
+                <p>
+                    @Model.Description
+                </p>
+            </div>
+            <br />
+            <div class="container">
+                <div class="row">
+                    <div class="col-7">
+                        <div><p>Peices: @Model.NumParts</p></div>
+                        <br />
+                        <div><p>Price: @Model.Price</p></div>
+                    </div>
+                    <div class="col-5">
+                        <a method="get" asp-controller="Home" asp-action="SelectedProduct" asp-route-productnum="@Model.ProductId">
+                            <div style="background-color: #FFD700; border: solid; border-color: #E3000B; color: black; padding: 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 24px; border-radius: 10px;">View Item</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<br />

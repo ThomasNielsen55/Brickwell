@@ -1,0 +1,54 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Product
+<div border="solid">
+    <div border="10px solid #000000" margin="100px" padding="25px" background-color="lightblue">
+        <form method="post">
+            <p>User @Model.ProductId</p>
+            <input asp-for="ProductId" type="hidden" />
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Name">Name:</label>
+                    <input asp-for="Name" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Year">Year:</label>
+                    <input asp-for="Year" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="NumParts">Number of Parts/Peices:</label>
+                    <input asp-for="NumParts" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Price">Price:</label>
+                    <input asp-for="Price" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="ImgLink">Image Link:</label>
+                    <input asp-for="ImgLink" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="PrimaryColor">Primary Color:</label>
+                    <input asp-for="PrimaryColor" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="SecondaryColor">Secondary Color:</label>
+                    <input asp-for="SecondaryColor" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Description">Description:</label>
+                    <input asp-for="Description" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Category">Category:</label>
+                    <input asp-for="Category" required class="form-control" />
+                </div>
+                <br />
+                <button type="submit">Confirm</button>
+        </form>
+    </div>
+</div>

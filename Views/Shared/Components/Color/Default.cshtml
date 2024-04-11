@@ -1,0 +1,53 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using Brickwell.Data.ViewModels
+
+@model FilterViewModel
+
+<div class="d-grid gap-2">
+    <h2>Category Selection</h2>
+
+    <form id="filterForm" method="get" asp-controller="Home" asp-action="Products">
+        <div>
+            <label class="form-check-label">
+                <input type="radio" name="category" class="form-check-input" value="" onchange="submitForm()"> All
+            </label>
+        </div>
+        @foreach (string category in Model.Categories ?? Enumerable.Empty<string>())
+        {
+            <div>
+                <label class="form-check-label">
+                    <input type="radio" name="category" class="form-check-input @(category == ViewBag.SelectedCategory ? "btn-primary" : "btn-outline-secondary")" value="@category" onchange="submitForm()" style="margin-right: 5px;">@category
+                </label>
+            </div>
+        }
+
+        <h2>Color Selection</h2>
+        <div>
+            <label class="form-check-label">
+                <input type="radio" name="primaryColor" class="form-check-input" value="" onchange="submitForm()"> All
+            </label>
+        </div>
+        @foreach (string primaryColor in Model.PrimaryColors ?? Enumerable.Empty<string>())
+        {
+            <div style="margin-top: 5px;">
+                <label class="form-check-label">
+                    <input type="radio" name="primaryColor" class="form-check-input @(primaryColor == ViewBag.SelectedPrimaryColor ? "btn-primary" : "btn-outline-secondary")" value="@primaryColor" onchange="submitForm()" style="margin-right: 5px;">@primaryColor
+                </label>
+            </div>
+        }
+    </form>
+</div>
+
+<script>
+    function submitForm() {
+        document.getElementById("filterForm").submit();
+    }
+</script>
+
+
+
+

@@ -1,0 +1,52 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model ProductsPagesViewModel
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-2 p-0" style="background-color: ghostwhite;">
+            <div style="height: 100%; overflow-y: auto; padding: 0 10px;">
+                <!-- Place ColorViewComponent here -->
+                <vc:color />
+            </div>
+        </div>
+        <div class="col-10">
+            <div class="container">
+                <div class="row">
+                    @foreach (var x in Model.Products)
+                    {
+                        <div class="col-4">
+                            <div  style="box-shadow: 0 4px 4px 0 rgba(0,0,0,0.2); transition: 0.3s; margin: 2px; color: white; background-color: #272D6D;">
+                                <img src="@x.ImgLink" alt="Product picture" class="img-fluid">
+                                <div class="container" style="padding: 2px 2px;">
+                                    <h4><b>@x.Name</b></h4>
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <p>@x.Category<br />
+                                            Pieces: @x.NumParts<br />
+                                            Price: $@x.Price</p>
+                                        </div>
+                                        <div class ="col-5">
+                                            <a method="get" asp-controller="Home" asp-action="SelectedProduct" asp-route-productnum="@x.ProductId">
+                                                <div style="background-color: #FFD700; border: solid; border-color: #E3000B; color: black; padding: 5px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 5px;">View Item</div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

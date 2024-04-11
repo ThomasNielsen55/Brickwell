@@ -1,0 +1,47 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+@model Customer
+<div border="solid">
+    <div border="10px solid #000000" margin="100px" padding="25px" background-color="lightblue">
+        <form method="post">
+            <p>User @Model.customer_ID</p>
+            <input asp-for="customer_ID" type="hidden" />
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="first_name">First Name:</label>
+                    <input asp-for="first_name" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="last_name">Last Name:</label>
+                    <input asp-for="last_name" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="birth_date">Birth Date:</label>
+                    <input asp-for="birth_date" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="country_of_residence">Country of Residence:</label>
+                    <input asp-for="country_of_residence" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="birth_date">Birth Date:</label>
+                    <input asp-for="birth_date" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="gender">Gender:</label>
+                    <input asp-for="gender" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="age">Age:</label>
+                    <input asp-for="age" required class="form-control" />
+                </div>
+            <br />
+            <button type="submit">Confirm</button>
+        </form>
+    </div>
+</div>

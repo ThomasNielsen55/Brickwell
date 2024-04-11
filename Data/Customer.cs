@@ -7,17 +7,17 @@ namespace Brickwell.Data;
 public partial class Customer
 {
     [Key]
-    public int CustomerId { get; set; }
+    public int customer_ID { get; set; }
 
-    public string FirstName { get; set; } = null!;
+    public string first_name { get; set; } = null!;
 
-    public string LastName { get; set; } = null!;
+    public string last_name { get; set; } = null!;
 
-    public string BirthDate { get; set; } = null!;
+    public string? birth_date { get; set; } = null!;
 
-    public string? CountryOfResidence { get; set; }
+    public string? country_of_residence { get; set; }
 
-    public string? Gender { get; set; }
+    public string? gender { get; set; }
 
-    public double? Age { get; set; }
+    public double? age { get; set; }
 }

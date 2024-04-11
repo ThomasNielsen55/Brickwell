@@ -1,0 +1,70 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Order
+<div border="solid">
+    <div border="10px solid #000000" margin="100px" padding="25px" background-color="lightblue">
+        <form method="post">
+            <p>User @Model.TransactionId</p>
+            <input asp-for="TransactionId" type="hidden" />
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="CustomerId">Customer ID:</label>
+                    <input asp-for="CustomerId" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Date">Date:</label>
+                    <input asp-for="Date" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="DayOfWeek">Day Of Week:</label>
+                    <input asp-for="DayOfWeek" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Time">Time:</label>
+                    <input asp-for="Time" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="EntryMode">Entry Mode:</label>
+                    <input asp-for="EntryMode" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Amount">Amount:</label>
+                    <input asp-for="Amount" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="TypeOfTransaction">Type Of Transaction:</label>
+                    <input asp-for="TypeOfTransaction" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="CountryOfTransaction">Country Of Transaction:</label>
+                    <input asp-for="CountryOfTransaction" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="ShippingAddress">Shipping Address:</label>
+                    <input asp-for="ShippingAddress" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Bank">Bank:</label>
+                    <input asp-for="Bank" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="TypeOfCard">Type Of Card:</label>
+                    <input asp-for="TypeOfCard" required class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Fraud">Fraud:</label>
+                    <select asp-for="Fraud" class="form-control">
+                        <option value=null>-Select-</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                <br />
+                <button type="submit">Confirm</button>
+        </form>
+    </div>
+</div>

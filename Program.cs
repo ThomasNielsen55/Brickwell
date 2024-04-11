@@ -1,6 +1,9 @@
 using Brickwell.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NetEscapades.AspNetCore.SecurityHeaders;
+using Brickwell.CustomMiddleware;
+using Brickwell.Components;
 
 
 //id 737343936510-f1l003ma7l0f12omjef0ojl6ejovuktp.apps.googleusercontent.com
@@ -10,6 +13,20 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
 
+services.AddAuthentication().AddGoogle(googleOptions =>
+{
+    googleOptions.ClientId = configuration["Authentication__Google__ClientId"];
+    googleOptions.ClientSecret = configuration["Authentication__Google__ClientSecret"];
+});
+
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    // This lambda determines whether user consent for non-essential 
+    // cookies is needed for a given request.
+    options.CheckConsentNeeded = context => true;
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+    options.ConsentCookieValue = "true";
+});
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -21,7 +38,20 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<BrickDbContext>();
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddScoped<IBrickRepository, EFBrickRepository>();
+builder.Services.AddTransient<ColorViewComponent>();
+
+builder.Services.AddHsts(options =>
+{
+    options.Preload = true;
+    options.IncludeSubDomains = true;
+});
+
 var app = builder.Build();
+
+
+app.UseMiddleware<ContentSecurityPolicyMiddleware>();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -37,6 +67,7 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseCookiePolicy();
 
 app.UseRouting();
 

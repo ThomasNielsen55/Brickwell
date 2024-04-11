@@ -1,0 +1,47 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<Product>
+
+<h1>Product</h1>
+<a class="button" asp-area="" asp-controller="Admin" asp-action="Index">Back</a>
+<table>
+  <thead>
+    <tr>
+      <th>Product ID</th>
+      <th>Name</th>
+      <th>Year</th>
+      <th>Number of Parts</th>
+      <th>Price</th>
+      <th>Image Link</th>
+      <th>Primary Color</th>
+      <th>Secondary Color</th>
+      <th>Description</th>
+      <th>Category</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+
+  <tbody>
+        @foreach (var x in Model)
+        {
+            <tr>
+                <td>@x.ProductId</td>
+                <td>@x.Name</td>  
+                <td>@x.Year.ToString()</td>  
+                <td>@x.NumParts?.ToString()</td>  
+                <td>@x.Price?.ToString()</td>  
+                <td>@x.ImgLink</td>
+                <td>@x.PrimaryColor</td>  
+                <td>@x.SecondaryColor</td>  
+                <td>@x.Description</td>
+                <td>@x.Category</td>
+                <td><a class="btn btn-info" asp-controller="Admin" asp-action="EditProduct" asp-route-productid="@x.ProductId">Edit</a></td>
+                <td><a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteProduct" asp-route-productid="@x.ProductId">Delete</a></td>
+            </tr>
+        }
+  </tbody>
+</table>
