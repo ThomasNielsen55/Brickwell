@@ -28,7 +28,7 @@ namespace BrickedUpBrickBuyer.Controllers
             // Initialize inference session. Make sure path is correct
             try
             {
-                _session = new InferenceSession("C:/Users/nicholasthomas/Source/Repos/Brickwell/hist_grad_boost.onnx");
+                _session = new InferenceSession("hist_grad_boost.onnx");
                 _logger.LogInformation("Onnx model loaded successfully");
             }
             catch (Exception ex)
@@ -119,8 +119,22 @@ namespace BrickedUpBrickBuyer.Controllers
             return View(Productguy);
         }
 
-        public IActionResult Orders(Order order) 
+        public IActionResult Test(int ordernum = 737060)
         {
+            var orderguy = new Order();
+            orderguy = _brickRepository.Orders.ToList()
+                .Where(x => x.TransactionId == ordernum)
+                .FirstOrDefault();
+
+            return View(orderguy);
+        }
+
+        public IActionResult Orders(int ordernum) 
+        {
+            var order = new Order();
+            order = _brickRepository.Orders.ToList()
+                .Where(x => x.TransactionId == ordernum)
+                .FirstOrDefault();
             //var records = (from order in _brickRepository.Orders
             //               join customer in _brickRepository.Customers
             //               on order.CustomerId equals customer.customer_ID
@@ -155,7 +169,7 @@ namespace BrickedUpBrickBuyer.Controllers
                 {
                     (float)record.Customer.age,
                     (float)record.Order.Time,
-                    (float)(record.Order.Amount ?? 0),
+                    (float)(record.Order.Amount),
 
                     // Check the dummy data
                     record.Customer.country_of_residence == "India" ? 1 : 0,
@@ -177,7 +191,6 @@ namespace BrickedUpBrickBuyer.Controllers
 
                     record.Order.TypeOfTransaction == "Online" ? 1 : 0,
                     record.Order.TypeOfTransaction == "POS" ? 1 : 0,
-                    record.Order.TypeOfTransaction == "Online" ? 1 : 0,
 
                     record.Order.CountryOfTransaction == "India" ? 1 : 0,
                     record.Order.CountryOfTransaction == "Russia" ? 1 : 0,
@@ -225,12 +238,12 @@ namespace BrickedUpBrickBuyer.Controllers
 
             if (Fraud == 0)
             {
-                _brickRepository.AddOrder(order);
+                //_brickRepository.AddOrder(order);
                 return View("Confirmation");
             }
             else
             {
-                _brickRepository.AddOrder(order);
+                //_brickRepository.AddOrder(order);
                 return View("Review");
             }
             // predictions.Add(new OrderPrediction {Orders = record.Order, Customer = record.Customer});
