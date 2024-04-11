@@ -21,7 +21,8 @@ namespace Brickwell.Controllers
         [HttpGet]
         public IActionResult AddOrder()
         {
-            return View();
+            Order neworder = new Order();
+            return View(neworder);
         }
 
         [HttpPost]
@@ -69,7 +70,8 @@ namespace Brickwell.Controllers
         [HttpGet]
         public IActionResult AddProduct()
         {
-            return View();
+            Product newproduct = new Product();
+            return View(newproduct);
         }
 
         [HttpPost]
@@ -117,7 +119,8 @@ namespace Brickwell.Controllers
         [HttpGet]
         public IActionResult AddUser()
         {
-            return View();
+            Customer newcustomer = new Customer();
+            return View(newcustomer);
         }
 
         [HttpPost]
