@@ -1,21 +1,42 @@
 using Brickwell.Data;
 using Brickwell.Data.ViewModels;
-
-
-
-
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.ML;
+using Microsoft.ML.OnnxRuntime;
+using Microsoft.ML.OnnxRuntime.Tensors;
 using Microsoft.Identity.Client;
 
 namespace BrickedUpBrickBuyer.Controllers
 {
     public class HomeController : Controller
     {
-        private IBrickRepository _brickRepository;
-        public HomeController(IBrickRepository brick)
+        private readonly IBrickRepository _brickRepository;
+        private readonly InferenceSession _session;
+        private readonly ILogger<HomeController> _logger;
+        public HomeController(IBrickRepository brick, ILogger<HomeController> logger)
         {
             _brickRepository = brick;
+            _logger = logger;
+
+            // Initialize inference session. Make sure path is correct
+            try
+            {
+                _session = new InferenceSession("C:/Users/nicholasthomas/Source/Repos/Brickwell/hist_grad_boost.onnx");
+                _logger.LogInformation("Onnx model loaded successfully");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error loading the ONNX model: {ex.Message}");
+            }
         }
+
+
 
         public IActionResult Index()
         {
@@ -93,6 +114,96 @@ namespace BrickedUpBrickBuyer.Controllers
                 .FirstOrDefault();
 
             return View(Productguy);
+        }
+
+        public IActionResult Orders() 
+        {
+            var records = (from order in _brickRepository.Orders
+                           join customer in _brickRepository.Customers
+                           on order.CustomerId equals customer.customer_ID
+                           orderby order.Date descending
+                           select new
+                           {
+                               Customer = customer,
+                               Order = order
+                           }).Take(20);
+
+            var predictions = new List<OrderPrediction>(); // Need to figure out what this will be...
+
+            var class_type_dict = new Dictionary<int, string>
+                {
+                    {0, "Not Fraud" },
+                    {1, "Fraud" }
+                };
+
+            foreach (var record in records)
+            {
+                // Make the data compatible with the models
+                var input = new List<float>
+                    {
+                        (float)record.Customer.age,
+                        (float)record.Order.Time,
+                        (float)(record.Order.Amount ?? 0),
+
+                        // Check the dummy data
+                        record.Customer.country_of_residence == "India" ? 1 : 0,
+                        record.Customer.country_of_residence == "Russia" ? 1 : 0,
+                        record.Customer.country_of_residence == "USA" ? 1 : 0,
+                        record.Customer.country_of_residence == "UnitedKingdom" ? 1 : 0,
+
+                        record.Customer.gender == "M" ? 1 : 0,
+
+                        record.Order.DayOfWeek == "Mon" ? 1 : 0,
+                        record.Order.DayOfWeek == "Sat" ? 1 : 0,
+                        record.Order.DayOfWeek == "Sun" ? 1 : 0,
+                        record.Order.DayOfWeek == "Thu" ? 1 : 0,
+                        record.Order.DayOfWeek == "Tue" ? 1 : 0,
+                        record.Order.DayOfWeek == "Wed" ? 1 : 0,
+
+                        record.Order.EntryMode == "PIN" ? 1 : 0,
+                        record.Order.EntryMode == "Tap" ? 1 : 0,
+
+                        record.Order.TypeOfTransaction == "Online" ? 1 : 0,
+                        record.Order.TypeOfTransaction == "POS" ? 1 : 0,
+                        record.Order.TypeOfTransaction == "Online" ? 1 : 0,
+
+                        record.Order.CountryOfTransaction == "India" ? 1 : 0,
+                        record.Order.CountryOfTransaction == "Russia" ? 1 : 0,
+                        record.Order.CountryOfTransaction == "USA" ? 1 : 0,
+                        record.Order.CountryOfTransaction == "UnitedKingdom" ? 1 : 0,
+
+                        record.Order.ShippingAddress == "India" ? 1 : 0,
+                        record.Order.ShippingAddress == "Russia" ? 1 : 0,
+                        record.Order.ShippingAddress == "USA" ? 1 : 0,
+                        record.Order.ShippingAddress == "UnitedKingdom" ? 1 : 0,
+                    
+                        record.Order.Bank == "HSBC" ? 1 : 0,
+                        record.Order.Bank == "Halifax" ? 1 : 0,
+                        record.Order.Bank == "Lloyds" ? 1 : 0,
+                        record.Order.Bank == "Metro" ? 1 : 0,
+                        record.Order.Bank == "Monzo" ? 1 : 0,
+                        record.Order.Bank == "RBS" ? 1 : 0,
+
+                        record.Order.TypeOfCard == "Visa" ? 1 : 0
+                    };
+
+                var inputTensor = new DenseTensor<float>(input.ToArray(), new[] { 1, input.Count });
+
+                var inputs = new List<NamedOnnxValue>
+                {
+                    NamedOnnxValue.CreateFromTensor("float_input", inputTensor)
+                };
+                string predictionResult;
+                using (var results = _session.Run(inputs))
+                {
+                    var prediction = results.FirstOrDefault(item => item.Name == "output_label")?.AsTensor<long>().ToArray();
+                    predictionResult = prediction != null && prediction.length > 0 ? class_type_dict.GetValueOrDefault((int)prediction[0], "Unknown") : "Error in Prediction";
+                }
+
+                predictions.Add(new OrderPrediction {Orders = record.Order, Customer = record.Customer});
+            }
+
+            return View(predictions);
         }
 
         //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
