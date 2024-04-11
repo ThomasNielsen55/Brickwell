@@ -1,0 +1,13 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Customer
+
+<h1>Confirmation</h1>
+
+<h4>You are about to perform a dangerous action! Would you like to continue?</h4>
+<br />
+<a class="btn btn-info" asp-area="" asp-controller="Admin" asp-action="Users">Go Back (Cancel)</a>
+<a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteUser" asp-route-userid="@Model.customer_ID">Continue</a>
