@@ -45,7 +45,7 @@
             <td>@x.TypeOfCard</td>
             <td>@x.Fraud.ToString()</td>
             <td><a class="btn btn-info" asp-controller="Admin" asp-action="EditOrder" asp-route-orderid="@x.TransactionId">Edit</a></td>
-            <td><a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteOrder" asp-route-orderid="@x.TransactionId">Delete</a></td>
+            <td><a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteOrderConfirmation" asp-route-orderid="@x.TransactionId">Delete</a></td>
         </tr>
         }
   </tbody>

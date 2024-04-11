@@ -33,7 +33,7 @@
                 <td>@x.gender</td>
                 <td>@x.age?.ToString("0.0")</td>
                 <td><a class="btn btn-info" asp-controller="Admin" asp-action="EditUser" asp-route-userid="@x.customer_ID">Edit</a></td>
-                <td><a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteUser" asp-route-userid="@x.customer_ID">Delete</a></td>
+                <td><a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteUserConfirmation" asp-route-userid="@x.customer_ID">Delete</a></td>
             </tr>
         }
     </tbody>

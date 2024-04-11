@@ -17,10 +17,6 @@ namespace Brickwell.Controllers
         {
             return View();
         }
-        public IActionResult Confirmation()
-        {
-            return View();
-        }
 
         [HttpGet]
         public IActionResult AddOrder()
@@ -50,6 +46,14 @@ namespace Brickwell.Controllers
                 .Where(x => x.TransactionId == orderid)
                 .FirstOrDefault();
             return View("AddOrder",orderdude);
+        }
+        public IActionResult DeleteOrderConfirmation(int orderid)
+        {
+            var orderdude = new Order();
+            orderdude = _brickRepository.Orders.ToList()
+                .Where(x => x.TransactionId == orderid)
+                .FirstOrDefault();
+            return View(orderdude);
         }
         public IActionResult DeleteOrder(int orderid)
         {
@@ -91,6 +95,14 @@ namespace Brickwell.Controllers
                 .FirstOrDefault();
             return View("AddProduct", productdude);
         }
+        public IActionResult DeleteProductConfirmation(int productid)
+        {
+            var productdude = new Product();
+            productdude = _brickRepository.Products.ToList()
+                .Where(x => x.ProductId == productid)
+                .FirstOrDefault();
+            return View(productdude);
+        }
         public IActionResult DeleteProduct(int productid)
         {
             var record = _brickRepository.Products
@@ -131,6 +143,15 @@ namespace Brickwell.Controllers
                 .FirstOrDefault();
             return View("AddUser", userdude);
         }
+        public IActionResult DeleteUserConfirmation(int userid)
+        {
+            var userdude = new Customer();
+            userdude = _brickRepository.Customers.ToList()
+                .Where(x => x.customer_ID == userid)
+                .FirstOrDefault();
+            return View(userdude);
+        }
+
         public IActionResult DeleteUser(int userid)
         {
             var record = _brickRepository.Customers
