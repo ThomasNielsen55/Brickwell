@@ -6,6 +6,7 @@ using Brickwell.Data.ViewModels;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
+using System.Drawing.Printing;
 
 namespace BrickedUpBrickBuyer.Controllers
 {
@@ -37,33 +38,35 @@ namespace BrickedUpBrickBuyer.Controllers
         {
             return View();
         }
-        public IActionResult Products(string primaryColor, string category)
+        public IActionResult Products(string primaryColor, string category, int pageSize, int pageNum = 1)
         {
-            //var products = _brickRepository.Products;
-            //var ViewModel= new FilterViewModel
-
-            //{
-            //    Categories = _brickRepository.Products
-            // .Select(x => x.Category ?? "")
-            // .Where(x => !string.IsNullOrWhiteSpace(x))
-            // .Distinct()
-            // .OrderBy(x => x)
-            //};
-
-            //var modifiedCategories = ViewModel.Categories.Select(m => m.Split(" - ").FirstOrDefault()).ToList();
-
-            //ViewModel.Categories = modifiedCategories;
+            if (pageSize == 0)
+            {
+                pageSize = 5;
+            }
 
             var productInfos = new ProductsPagesViewModel
             {
                 Products = _brickRepository.Products
-                .Where(x => (primaryColor == null || x.PrimaryColor == primaryColor || x.SecondaryColor == primaryColor) && (x.Category.Contains(category) || category == null))
-                .OrderBy(x => x.Name),
+                            .Where(x => (primaryColor == null || x.PrimaryColor == primaryColor || x.SecondaryColor == primaryColor) && (x.Category.Contains(category) || category == null))
+                            .OrderByDescending(x => x.Price)
+                            .Skip((pageNum - 1) * pageSize)
+                            .Take(pageSize),
                 CurrentColor = primaryColor,
                 CurrentCategory = category,
+                PaginationInfo = new PaginationInfo
+                {
+                    CurrentPage = pageNum,
+                    ItemsPerPage = pageSize,
+                    TotalItems = _brickRepository.Products
+                                .Where(x => (primaryColor == null || x.PrimaryColor == primaryColor || x.SecondaryColor == primaryColor) && (x.Category.Contains(category) || category == null))
+                                .OrderBy(x => x.Name)
+                                .Count()
+                },
             };
             return View(productInfos);
         }
+
         public IActionResult Privacy()
         {
             return View();
