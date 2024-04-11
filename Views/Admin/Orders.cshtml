@@ -6,7 +6,8 @@
 @model List<Order>
 
 <h1>Orders</h1>
-<a class="button" asp-area="" asp-controller="Admin" asp-action="Index">Back</a>
+<a class="btn btn-info" asp-controller="Admin" asp-action="AddOrder">Add an Order</a>
+<a class="btn" asp-area="" asp-controller="Admin" asp-action="Index">Back</a>
 <table>
   <thead>
     <tr>
@@ -50,3 +51,11 @@
         }
   </tbody>
 </table>
+
+<div class="text-center" id="predictionResult">
+    @if (ViewBag.Prediction != null)
+    {
+        <h2>Prediction: @ViewBag.Prediction</h2>
+    }
+</div>
+

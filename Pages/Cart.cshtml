@@ -1,0 +1,40 @@
+﻿@page
+@model Brickwell.Pages.CartModel
+@{
+}
+
+
+<h1>Your cart</h1>
+
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th>Product Name</th>
+			<th>Quantity</th>
+			<th class="text-right">Amount</th>
+			<th class="text-right">Subtotal</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		@foreach (var l in Model.Cart?.Lines ?? Enumerable.Empty<Cart.CartLine>())
+		{
+		<tr>
+			<td class="text-left">@l.Product.Name</td>
+			<td class="text-center">@l.Quantity</td>
+			<td class="text-right">@l.Product.Price</td>
+			<td class="text-right">@((l.Quantity * l.Product.Price).ToString("c"))</td>
+		</tr>
+		}
+		<tfoot>
+			<tr>
+				<td colspan="3" class="text-right">Total:</td>
+				<td class="text-right">@Model.Cart?.CalculateTotal().ToString()</td>
+			</tr>
+		</tfoot>
+	</tbody>
+</table>
+
+<div>
+	<a class="btn btn-primary" href="/Home/Products">Continue Shopping</a>
+</div>

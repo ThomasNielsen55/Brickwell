@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -7,6 +13,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Brickwell.styles.css" asp-append-version="true" />
+
+
 
 </head>
 <body>
@@ -42,11 +50,10 @@
                                     <li class="nav-item col-lg-1.5">
                                         <partial name="_LoginPartial" />
                                     </li>
-                                    
                                     <li class="nav-item col-lg-.5">
-										<form method="get" asp-page="/Cart">
+                                        <form method="get" asp-page="/Cart">
                                             <button type="submit"><img src="~/img/cart.PNG" height="25px" /></button>
-										</form>
+                                        </form>
                                     </li>
                                 </ul>
                             </div>
@@ -115,4 +122,5 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
 

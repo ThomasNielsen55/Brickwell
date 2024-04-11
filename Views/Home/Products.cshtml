@@ -15,8 +15,27 @@
                 <vc:color />
             </div>
         </div>
+        
         <div class="col-10">
             <div class="container">
+                <div class="row">
+                    <div class="col-8 d-flex justify-content-center">
+                        <div page-model="@Model.PaginationInfo" page-action="Products" Current-Color=@Model.CurrentColor Current-Category=@Model.CurrentCategory desired-page-size=@Model.PaginationInfo.ItemsPerPage page-classes-enabled="true" page-class="btn text-center"
+                             page-class-normal="btn-outline-dark" page-class-selected="btn-primary"></div>
+                    </div>
+                    <div class="col-4">
+                        <form id="paginationForm" method="get" asp-controller="Home" asp-action="Products" asp-route-primaryColor=@Model.CurrentColor asp-route-category=@Model.CurrentCategory>
+                            <label name="PageSize">Show:</label>
+
+                            <select name="PageSize" onchange="submitPagination()">
+                                <option value=0>#</option>
+                                <option value=5>5</option>
+                                <option value=10>10</option>
+                                <option value=20>20</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
                 <div class="row">
                     @foreach (var x in Model.Products)
                     {
@@ -41,12 +60,18 @@
                             </div>
                         </div>
                     }
+
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<script>
+    function submitPagination() {
+        document.getElementById("paginationForm").submit();
+    }
+</script>
 
 
 

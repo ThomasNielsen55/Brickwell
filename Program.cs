@@ -58,6 +58,10 @@ public class Program
             options.IncludeSubDomains = true;
         });
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+
+var app = builder.Build();
         var app = builder.Build();
 
 

@@ -15,7 +15,7 @@ public partial class Product
 
     public int? NumParts { get; set; }
 
-    public int? Price { get; set; }
+    public int Price { get; set; }
 
     public string? ImgLink { get; set; }
 

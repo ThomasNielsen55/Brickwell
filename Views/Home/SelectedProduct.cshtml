@@ -3,6 +3,7 @@
 *@
 @{
 }
+@using Brickwell.Infrastructure;
 
 @model Product
 
@@ -37,9 +38,14 @@
                         <div><p>Price: @Model.Price</p></div>
                     </div>
                     <div class="col-5">
-                        <a method="get" asp-controller="Home" asp-action="SelectedProduct" asp-route-productnum="@Model.ProductId">
-                            <div style="background-color: #FFD700; border: solid; border-color: #E3000B; color: black; padding: 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 24px; border-radius: 10px;">View Item</div>
-                        </a>
+                        @* <a method="get" asp-controller="Home" asp-action="Cart" asp-route-productnum="@Model.ProductId"> *@
+                        <form id=@Model.ProductId method="post" asp-page="/Cart">
+                            @* asp-route-productnum="@Model.ProductId" *@
+                                <input type="hidden" asp-for="ProductId" />
+                                <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()"/>
+                                <button type="submit" style="background-color: #FFD700; border: solid; border-color: #E3000B; color: black; padding: 10px; text-align: center; text-decoration: none; display: inline-block; font-size: 24px; border-radius: 10px;">Add To Cart</button>
+                            </form>
+                        @* </a> *@
                     </div>
                 </div>
             </div>
