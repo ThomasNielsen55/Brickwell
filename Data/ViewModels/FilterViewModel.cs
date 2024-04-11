@@ -4,6 +4,7 @@
     {
         public IEnumerable<string>? Categories { get; set; }
         public IEnumerable<string>? PrimaryColors { get; set; }
+     
         public List<Product> Products { get; set; }
         
     }
