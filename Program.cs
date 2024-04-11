@@ -78,7 +78,7 @@ builder.Services.AddSession();
 
 
 var app = builder.Build();
-        var app = builder.Build();
+
 
 
         app.UseMiddleware<ContentSecurityPolicyMiddleware>();
