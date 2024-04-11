@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Brickwell</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BrickedUpBrickBuyer.styles.css" asp-append-version="true" />
+
+
+
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 p-0">
+                <header style="background-color: #272D6D;">
+                    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
+                        <div class="container-fluid">
+                            <img src="~/img/legologo.png" height="50px" />
+                            <div class="nav-item col-lg-2">
+                                <a class="navbar-brand mx-auto" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/bricksup.png" alt="Bricks Up logo" height="50px" /></a>
+                            </div>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                                <ul class="navbar-nav w-100">
+                                    <li class="nav-item col-lg-2">
+                                        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                    </li>
+                                    <li class="nav-item col-lg-2">
+                                        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Products">Discover</a>
+                                    </li>
+                                    <li class="nav-item col-lg-4">
+                                        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
+                                    </li>
+                                    <li class="nav-item col-lg-1">
+                                        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy"><img src="~/img/searchlogo.png" height="25px" /></a>
+                                    </li>
+                                    <li class="nav-item col-lg-1.5">
+                                        <partial name="_LoginPartial" />
+                                    </li>
+                                    <li class="nav-item col-lg-.5">
+                                        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Cart"><img src="~/img/cart.PNG" height="25px" /></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </header>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted" style="background-color: #FFD700;">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-top box-shadow mb-3">
+            <div class="container-fluid text-dark">
+                <a href="https://www.lego.com/en-us">
+                    <img src="~/img/Lego.png" height="50 px" />
+                </a>
+                <a asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/img/BrickwellLogo.png" height="50 px" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Help</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="https://www.facebook.com/AuroraBricks"><img src="~/img/face.png" height="25 px" /></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="https://www.instagram.com/AuroraBricks"><img src="~/img/insta.png" height="25 px" /></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="https://www.x.com/AuroraBricks"><img src="~/img/twitx.png" height="25 px" /></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
