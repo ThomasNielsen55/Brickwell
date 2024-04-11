@@ -24,6 +24,14 @@
 			<td class="text-center">@l.Quantity</td>
 			<td class="text-right">@l.Product.Price</td>
 			<td class="text-right">@((l.Quantity * l.Product.Price).ToString("c"))</td>
+				<td>
+					<form id=@l.Product.ProductId method="Delete" asp-page="/Cart">
+						@* asp-route-productnum="@Model.ProductId" *@
+						<input type="hidden" asp-for=@l.Product.ProductId />
+						<input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+						<button type="submit" class="btn btn-danger">Remove From Cart</button>
+					</form>
+				</td>
 		</tr>
 		}
 		<tfoot>
@@ -36,5 +44,5 @@
 </table>
 
 <div>
-	<a class="btn btn-primary" href="/Home/Products">Continue Shopping</a>
+	<a class="btn btn-primary" asp-controller="Home" asp-action="Products">Continue Shopping</a>
 </div>
