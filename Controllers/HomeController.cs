@@ -13,6 +13,7 @@ using Microsoft.ML.OnnxRuntime.Tensors;
 using Microsoft.Identity.Client;
 using System.Drawing.Printing;
 using Brickwell.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BrickedUpBrickBuyer.Controllers
 {
@@ -64,7 +65,8 @@ namespace BrickedUpBrickBuyer.Controllers
         {
             return View();
         }
-		public IActionResult GetCheckout()
+        [Authorize(Roles = "Manager")]
+        public IActionResult GetCheckout()
 		{
             var viewModel = new CartCustomerOrderViewModel
             {
@@ -75,7 +77,8 @@ namespace BrickedUpBrickBuyer.Controllers
             };
 			return View(viewModel);
 		}
-		[HttpGet]
+        [Authorize(Roles = "Manager")]
+        [HttpGet]
         public IActionResult Cart()
         {
             return View();
@@ -113,10 +116,12 @@ namespace BrickedUpBrickBuyer.Controllers
         {
             return View();
         }
+        [Authorize(Roles = "Manager")]
         public IActionResult Confirmation()
         {
             return View();
         }
+        [Authorize(Roles = "Manager")]
         public IActionResult Review()
         {
             return View();
@@ -142,16 +147,16 @@ namespace BrickedUpBrickBuyer.Controllers
             return View(Productguy);
         }
 
-        public IActionResult Test(int ordernum = 737060)
-        {
-            var orderguy = new Order();
-            orderguy = _brickRepository.Orders.ToList()
-                .Where(x => x.TransactionId == ordernum)
-                .FirstOrDefault();
+        //public IActionResult Test(int ordernum = 737060)
+        //{
+        //    var orderguy = new Order();
+        //    orderguy = _brickRepository.Orders.ToList()
+        //        .Where(x => x.TransactionId == ordernum)
+        //        .FirstOrDefault();
 
-            return View(orderguy);
-        }
-
+        //    return View(orderguy);
+        //}
+        [Authorize(Roles = "Manager")]
         [HttpPost]
         public IActionResult Orders(Order bag) 
         {
