@@ -28,20 +28,20 @@
 		
 			</tr>
 		}
+	</tbody>
 	<tfoot>
 		<tr>
 			<td colspan="3" class="text-right">Total:</td>
 			<td class="text-right">@Model.Cart?.CalculateTotal().ToString()</td>
 		</tr>
 	</tfoot>
-	</tbody>
 </table>
 <form method="get" asp-page="/Cart">
 	<button type="submit">Review Cart</button>
 </form>
 <h2>Review your order and enter some information to make your experience better</h2>
 
-<form method="post">
+<form method="post" asp-controller="Home" asp-action="Orders">
 
 
 	@{
@@ -51,6 +51,12 @@
 	}
 
 	<input type="hidden" id="customerId" name="CustomerId" value="" />
+	<input type="hidden" id="age" name="Age" value="" />
+	<input type="hidden" id="countryOfResidence" name="CountryOfResidence" value="" />
+	<input type="hidden" id="gender" name="Gender" value="" />
+
+
+
 
 
 	<input type="hidden" id="date" name="Date" value="@currentDate.ToString("yyyy-MM-dd")" />
@@ -58,24 +64,14 @@
 	<input type="hidden" id="time" name="Time" value="@currentTime" />
 
 	@* <label for="amount">Amount:</label> *@
-	<input type="hidden" id="amount" name="Amount" value="@Model.Cart.CalculateTotal()" />
 
-	<label for="entryMode">Entry Mode:</label>
-	<select id="entryMode" name="EntryMode" required>
-		<option value="">Select an entry mode</option>
-		<option value="Tap">Tap</option>
-		<option value="PIN">PIN</option>
-		<option value="CVC">CVC</option>
-	</select>
+
 
 	<input type="hidden" id="amount" name="Amount" value="@Model.Cart.CalculateTotal()" />
 
-	<label for="typeOfTransaction">Type of Transaction:</label>
-	<select id="typeOfTransaction" name="TypeOfTransaction" required>
-		<option value="POS">POS</option>
-		<option value="ATM">ATM</option>
-		<option value="Online">Online</option>
-	</select>
+	<input type="hidden" id="typeOfTransaction" name="TypeOfTransaction" value="Online" />
+	<input type="hidden" id="entryMode" name="EntryMode" value="CVC" />
+
 
 	<label for="countryOfTransaction">Country of Transaction:</label>
 	<select id="countryOfTransaction" name="CountryOfTransaction" required>
