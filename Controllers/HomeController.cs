@@ -61,7 +61,7 @@ namespace BrickedUpBrickBuyer.Controllers
             var viewModel = new CartCustomerOrderViewModel
             {
                 Cart = HttpContext.Session.GetJson<Cart>("cart"),
-                Products = _brickRepository.Products,
+                //Products = _brickRepository.Products,
                 Orders = _brickRepository.Orders,
                 Customers = _brickRepository.Customers
             };
@@ -142,12 +142,12 @@ namespace BrickedUpBrickBuyer.Controllers
             return View(orderguy);
         }
 
-        public IActionResult Orders(int ordernum) 
+        public IActionResult Orders(CheckoutViewModel record) 
         {
-            var order = new Order();
-            order = _brickRepository.Orders.ToList()
-                .Where(x => x.TransactionId == ordernum)
-                .FirstOrDefault();
+            //var order = new Order();
+            //order = _brickRepository.Orders.ToList()
+            //    .Where(x => x.TransactionId == ordernum)
+            //    .FirstOrDefault();
             //var records = (from order in _brickRepository.Orders
             //               join customer in _brickRepository.Customers
             //               on order.CustomerId equals customer.customer_ID
@@ -160,13 +160,13 @@ namespace BrickedUpBrickBuyer.Controllers
 
             //   var predictions = new List<OrderPrediction>(); // Need to figure out what this will be...
 
-            var record = new RecordViewModel()
-            {
-                Order = order,
-                Customer = _brickRepository.Customers
-                .Where(x => x.customer_ID == order.CustomerId)
-                .FirstOrDefault()
-            };
+            //var record = new RecordViewModel()
+            //{
+            //    Order = order,
+            //    Customer = _brickRepository.Customers
+            //    .Where(x => x.customer_ID == order.CustomerId)
+            //    .FirstOrDefault()
+            //};
 
 
             var class_type_dict = new Dictionary<int, string>

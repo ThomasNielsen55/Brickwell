@@ -60,12 +60,13 @@
 	else
 	{
 		<a class="btn btn-primary" method="get" href="/Home/GetCheckout">Checkout</a>
+		<form method="get" asp-page="/Cart">
+			@* asp-route-productnum="@Model.ProductId" *@
+			<input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+			<input type="hidden" name="delete" value="true" />
+			<button type="submit" name="delete" class="btn btn-danger">Empty Cart</button>
+		</form>
 	}
-	<form method="get" asp-page="/Cart">
-		@* asp-route-productnum="@Model.ProductId" *@
-		<input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
-		<input type="hidden" name="delete" value="true" />
-		<button type="submit" name="delete" class="btn btn-danger">Empty Cart</button>
-	</form>
+
 
 </div>
