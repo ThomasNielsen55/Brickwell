@@ -42,10 +42,10 @@ namespace BrickedUpBrickBuyer.Controllers
 
         public IActionResult Index()
         {
-            //var Bricks = _brickRepository.Customers.ToList();
+            var Bricks = _brickRepository.Customers.ToList();
 
 
-            return View(/*Bricks*/);
+            return View(Bricks);
         }
 
         public IActionResult About()
@@ -142,7 +142,8 @@ namespace BrickedUpBrickBuyer.Controllers
             return View(orderguy);
         }
 
-        public IActionResult Orders(CartCustomerOrderViewModel bag) 
+        [HttpPost]
+        public IActionResult Orders(Order bag) 
         {
             //var order = new Order();
             //order = _brickRepository.Orders.ToList()
@@ -168,7 +169,7 @@ namespace BrickedUpBrickBuyer.Controllers
             //    .FirstOrDefault()
             //};
             Order Order = new Order();
-            Order = bag.Order;
+            Order = bag;
 
             //order.Fraud = 0; 
             //order.ShippingAddress=bag.Order.
@@ -178,7 +179,7 @@ namespace BrickedUpBrickBuyer.Controllers
 
 
             var Customer = _brickRepository.Customers
-            .Where(x => x.customer_ID == 4)
+            .Where(x => x.customer_ID == 13)
             .FirstOrDefault();
 
 
@@ -271,15 +272,15 @@ namespace BrickedUpBrickBuyer.Controllers
 
             if (Fraud == 0)
             {
-                Order.Fraud = false;
-                //_brickRepository.AddOrder(order);
-                return View("Confirmation");
+                Order.Fraud = true;
+                _brickRepository.AddOrder(Order);
+                return View("Review");
             }
             else
             {
-                Order.Fraud = true;
-                //_brickRepository.AddOrder(order);
-                return View("Review");
+                Order.Fraud = false;
+                _brickRepository.AddOrder(Order);
+                return View("Confirmation");
             }
             // predictions.Add(new OrderPrediction {Orders = record.Order, Customer = record.Customer});
             //}
