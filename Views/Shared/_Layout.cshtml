@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Brickwell.styles.css" asp-append-version="true" />
-
+    <link rel="icon" type="image/x-icon" href="~/img/lego head.png">
 </head>
 <body>
     <div class="container-fluid">
@@ -17,7 +17,7 @@
                     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
                         <div class="container-fluid">
                             <partial name="~/Views/Home/_CookieConsentPartial.cshtml" />
-                            <img src="~/img/legologo.png" height="50px" />
+                            <img src="~/img/brickwelllogo.png" height="50px" />
                             <div class="nav-item col-lg-2">
                                 <a class="navbar-brand mx-auto" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/bricksup.png" alt="Bricks Up logo" height="50px" /></a>
                             </div>
@@ -45,7 +45,8 @@
                                     
                                     <li class="nav-item col-lg-.5">
 										<form method="get" asp-page="/Cart">
-                                            <button type="submit"><img src="~/img/cart.PNG" height="25px" /></button>
+                                            
+                                            <button type="submit" style="width:25px; height:25px; border:none; padding-top: 5px; background-color:#272D6D;"><img src="~/img/cart.PNG" style="width:25px; height:25px;" alt="Submit"></button>
 										</form>
                                     </li>
                                 </ul>
