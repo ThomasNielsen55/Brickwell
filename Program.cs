@@ -13,11 +13,23 @@ public class Program
         var services = builder.Services;
         var configuration = builder.Configuration;
 
-        services.AddAuthentication().AddGoogle(googleOptions =>
-        {
-            googleOptions.ClientId = configuration["Authentication__Google__ClientId"];
-            googleOptions.ClientSecret = configuration["Authentication__Google__ClientSecret"];
-        });
+
+        var googleClientId = builder.Configuration["Authentication__Google__ClientId"];
+        var googleClientSecret = builder.Configuration["Authentication__Google__ClientSecret"];
+        Console.WriteLine($"Google Client ID: {googleClientId}");
+        Console.WriteLine($"Google Client Secret: {googleClientSecret}");
+        builder.Services.AddAuthentication()
+          .AddGoogle(options =>
+          {
+              options.ClientId = googleClientId;
+              options.ClientSecret = googleClientSecret;
+          });
+
+        //services.AddAuthentication().AddGoogle(googleOptions =>
+        //{
+        //    googleOptions.ClientId = configuration["Authentication__Google__ClientId"];
+        //    googleOptions.ClientSecret = configuration["Authentication__Google__ClientSecret"];
+        //});
 
         builder.Services.Configure<CookiePolicyOptions>(options =>
         {
@@ -51,7 +63,6 @@ public class Program
         });
 
 
-
         builder.Services.AddScoped<IBrickRepository, EFBrickRepository>();
         builder.Services.AddTransient<ColorViewComponent>();
 
@@ -62,6 +73,7 @@ public class Program
             options.Preload = true;
             options.IncludeSubDomains = true;
         });
+
 
         builder.Services.AddDistributedMemoryCache();
         builder.Services.AddSession();
@@ -118,8 +130,37 @@ public class Program
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}");
 
-        app.Run();
+
+        using (var scope = app.Services.CreateScope())
+        {
+            var roleManager =
+                scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            var roles = new[] { "Admin", "Customer" }; // Maybe add jsut Admin and Customer
+
+            foreach (var role in roles)
+            {
+                if (!await roleManager.RoleExistsAsync(role))
+                    await roleManager.CreateAsync(new IdentityRole(role));
+            }
+        }
+
+        using (var scope = app.Services.CreateScope())
+        {
+            var userManager =
+                scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+
+
+            app.MapRazorPages();
+
+            app.Run();
+        }
     }
+    
+
+
+
 
     private static void ConfigureServices(IServiceCollection services)
     {
@@ -144,49 +185,12 @@ public class Program
 
         services.AddScoped<IBrickRepository, EFBrickRepository>();
         services.AddTransient<ColorViewComponent>();
-        using(var scope = app.Services.CreateScope()) 
-        {
-            var roleManager = 
-                scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-            var roles = new[] { "Admin", "Manager", "Member"}; // Maybe add jsut Admin and Customer
-
-            foreach (var role in roles) 
-            {
-                if (!await roleManager.RoleExistsAsync(role))
-                    await roleManager.CreateAsync(new IdentityRole(role));
-            }
-        }
 
 
-        using (var scope = app.Services.CreateScope())
-        {
-            var userManager =
-                scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-        services.Configure<IdentityOptions>(options =>
-        {
-            options.Password.RequireDigit = true;
-            options.Password.RequireLowercase = true;
-            options.Password.RequireNonAlphanumeric = true;
-            options.Password.RequireUppercase = true;
-            options.Password.RequiredLength = 12;
-            options.Password.RequiredUniqueChars = 1;
-        });
 
-        services.AddHsts(options =>
-        {
-            options.Preload = true;
-            options.IncludeSubDomains = true;
-        });
+
 
         services.AddDistributedMemoryCache();
         services.AddSession();
     }
-}
-
-        app.MapRazorPages();
-
-        app.Run();
-    }
-
 }
