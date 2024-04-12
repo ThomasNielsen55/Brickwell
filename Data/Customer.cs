@@ -20,4 +20,10 @@ public partial class Customer
     public string? gender { get; set; }
 
     public double? age { get; set; }
+    public int? recommendation_1 { get; set; }
+    public int? recommendation_2 { get; set; }
+    public int? recommendation_3 { get; set; }
+    public int? recommendation_4 { get; set; }
+    public int? recommendation_5 { get; set; }
+
 }
