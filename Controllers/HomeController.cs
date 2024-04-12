@@ -151,8 +151,8 @@ namespace BrickedUpBrickBuyer.Controllers
 
             return View(orderguy);
         }
-
-        [HttpPost]
+		[Authorize(Roles = "Manager")]
+		[HttpPost]
         public IActionResult Orders(Order bag) 
         {
             //var order = new Order();
