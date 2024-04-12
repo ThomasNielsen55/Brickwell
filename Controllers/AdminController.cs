@@ -3,15 +3,20 @@ using Brickwell.Data;
 using Brickwell.Data.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Brickwell.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
+        private readonly ILogger<AdminController> _logger;
+
         private IBrickRepository _brickRepository;
-        public AdminController(IBrickRepository brick)
+        public AdminController(IBrickRepository brick , ILogger<AdminController> logger)
         {
             _brickRepository = brick;
+            _logger = logger;   
         }
         public IActionResult Index()
         {
