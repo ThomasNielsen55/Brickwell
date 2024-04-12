@@ -3,8 +3,15 @@
 *@
 @{
 }
-<h1>Checkout</h1>
+@using Microsoft.AspNetCore.Http
+@model CartCustomerOrderViewModel
 
-<form method="get" asp-page="/Cart">
-    <button type="submit">Back to Cart</button>
-</form>
+
+@if (Model.Cart != null)
+{
+    <p>Your cart has @Model.Cart.Lines.Count items.</p>
+}
+else
+{
+    <p>Your cart is empty.</p>
+}
