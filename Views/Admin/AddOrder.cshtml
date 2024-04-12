@@ -9,55 +9,55 @@
     <div border="10px solid #000000" margin="100px" padding="25px" background-color="lightblue">
         <form method="post">
             <p>Edit Order</p>
-            <input asp-for="TransactionId" type="hidden" />
+            <input for="TransactionId" type="hidden" />
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label asp-for="CustomerId">Customer ID:</label>
-                    <input asp-for="CustomerId" required class="form-control" />
+                    <label id="CustomerId" for="CustomerId">Customer ID:</label>
+                    <input id="CustomerId" for="CustomerId" required class="form-control" />
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label asp-for="Date">Date:</label>
-                    <input asp-for="Date" required class="form-control" />
+                    <label id="Date" for="Date">Date:</label>
+                    <input id="Date" for="Date" required class="form-control" />
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label asp-for="DayOfWeek">Day Of Week:</label>
-                    <input asp-for="DayOfWeek" required class="form-control" />
+                    <label id="DayOfWeek" for="DayOfWeek">Day Of Week:</label>
+                    <input id="DayOfWeek" for="DayOfWeek" required class="form-control" />
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label asp-for="Time">Time:</label>
-                    <input asp-for="Time" required class="form-control" />
+                    <label id="Time" for="Time">Time:</label>
+                    <input id="Time" for="Time" required class="form-control" />
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label asp-for="EntryMode">Entry Mode:</label>
-                    <input asp-for="EntryMode" required class="form-control" />
+                    <label id="EntryMode" for="EntryMode">Entry Mode:</label>
+                    <input id="EntryMode" for="EntryMode" required class="form-control" />
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label asp-for="Amount">Amount:</label>
-                    <input asp-for="Amount" required class="form-control" />
+                    <label id="Amount" for="Amount">Amount:</label>
+                    <input id="Amount" for="Amount" required class="form-control" />
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label asp-for="TypeOfTransaction">Type Of Transaction:</label>
-                    <input asp-for="TypeOfTransaction" required class="form-control" />
+                    <label id="TypeOfTransaction" for="TypeOfTransaction">Type Of Transaction:</label>
+                    <input id="TypeOfTransaction" for="TypeOfTransaction" required class="form-control" />
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label asp-for="CountryOfTransaction">Country Of Transaction:</label>
-                    <input asp-for="CountryOfTransaction" required class="form-control" />
+                    <label id="CountryOfTransaction" for="CountryOfTransaction">Country Of Transaction:</label>
+                    <input id="CountryOfTransaction" for="CountryOfTransaction" required class="form-control" />
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label asp-for="ShippingAddress">Shipping Address:</label>
-                    <input asp-for="ShippingAddress" required class="form-control" />
+                    <label id="ShippingAddress" for="ShippingAddress">Shipping Address:</label>
+                    <input id="ShippingAddress" for="ShippingAddress" required class="form-control" />
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label asp-for="Bank">Bank:</label>
-                    <input asp-for="Bank" required class="form-control" />
+                    <label id="Bank" for="Bank">Bank:</label>
+                    <input id="Bank" for="Bank" required class="form-control" />
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label asp-for="TypeOfCard">Type Of Card:</label>
-                    <input asp-for="TypeOfCard" required class="form-control" />
+                    <label id="TypeOfCard" for="TypeOfCard">Type Of Card:</label>
+                    <input id="TypeOfCard" for="TypeOfCard" required class="form-control" />
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label asp-for="Fraud">Fraud:</label>
-                    <select asp-for="Fraud" class="form-control">
+                    <label id="Fraud" for="Fraud">Fraud:</label>
+                    <select id="Fraud" for="Fraud" class="form-control">
                         <option value=null>-Select-</option>
                         <option value="1">Yes</option>
                         <option value="0">No</option>
