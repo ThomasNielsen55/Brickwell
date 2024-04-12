@@ -6,110 +6,122 @@
 @using Microsoft.AspNetCore.Http
 @model CartCustomerOrderViewModel
 
+<div class="container">
+	<div class="row">
+		<div class="col-md-6">
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>Product Name</th>
+						<th>Quantity</th>
+						<th class="text-right">Amount</th>
+						<th class="text-right">Subtotal</th>
+					</tr>
+				</thead>
 
-<table class="table table-bordered table-striped">
-	<thead>
-		<tr>
-			<th>Product Name</th>
-			<th>Quantity</th>
-			<th class="text-right">Amount</th>
-			<th class="text-right">Subtotal</th>
-		</tr>
-	</thead>
-
-	<tbody>
-		@foreach (var l in Model.Cart?.Lines ?? Enumerable.Empty<Cart.CartLine>())
-		{
-			<tr>
-				<td class="text-left">@l.Product.Name</td>
-				<td class="text-center">@l.Quantity</td>
-				<td class="text-right">@l.Product.Price</td>
-				<td class="text-right">@((l.Quantity * l.Product.Price).ToString("c"))</td>
+				<tbody>
+					@foreach (var l in Model.Cart?.Lines ?? Enumerable.Empty<Cart.CartLine>())
+					{
+						<tr>
+							<td class="text-left">@l.Product.Name</td>
+							<td class="text-center">@l.Quantity</td>
+							<td class="text-right">@l.Product.Price</td>
+							<td class="text-right">@((l.Quantity * l.Product.Price).ToString("c"))</td>
 		
-			</tr>
-		}
-	</tbody>
-	<tfoot>
-		<tr>
-			<td colspan="3" class="text-right">Total:</td>
-			<td class="text-right">@Model.Cart?.CalculateTotal().ToString()</td>
-		</tr>
-	</tfoot>
-</table>
-<form method="get" asp-page="/Cart">
-	<button type="submit">Review Cart</button>
-</form>
-<h2>Review your order and enter some information to make your experience better</h2>
+						</tr>
+					}
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="3" class="text-right">Total:</td>
+						<td class="text-right">@Model.Cart?.CalculateTotal().ToString()</td>
+					</tr>
+				</tfoot>
+			</table>
+			
+			<form method="get" asp-page="/Cart">
+				<button type="submit">Review Cart</button>
+			</form>
 
-<form method="post" asp-controller="Home" asp-action="Orders">
+		</div>
+		<div class="col-md-6">
+			<h4>Review your order and enter some information to make your experience better</h4>
 
+			<form method="post" asp-controller="Home" asp-action="Orders">
 
-	@{
-		var currentDate = DateTime.Now;
-		var currentDayOfWeek = currentDate.DayOfWeek.ToString();
-		var currentTime = currentDate.TimeOfDay.TotalSeconds;
-	}
+				@{
+					var currentDate = DateTime.Now;
+					var currentDayOfWeek = currentDate.DayOfWeek.ToString();
+					var currentTime = currentDate.TimeOfDay.TotalSeconds;
+				}
+				<input type="hidden" id="customerId" name="CustomerId" value="" />
+				<input type="hidden" id="age" name="Age" value="" />
+				<input type="hidden" id="countryOfResidence" name="CountryOfResidence" value="" />
+				<input type="hidden" id="gender" name="Gender" value="" />
 
-	<input type="hidden" id="customerId" name="CustomerId" value="" />
-	<input type="hidden" id="age" name="Age" value="" />
-	<input type="hidden" id="countryOfResidence" name="CountryOfResidence" value="" />
-	<input type="hidden" id="gender" name="Gender" value="" />
+				<input type="hidden" id="date" name="Date" value="@currentDate.ToString("yyyy-MM-dd")" />
+				<input type="hidden" id="dayOfWeek" name="DayOfWeek" value="@currentDayOfWeek" />
+				<input type="hidden" id="time" name="Time" value="@currentTime" />
 
+				@* <label for="amount">Amount:</label> *@
 
+				<input type="hidden" id="amount" name="Amount" value="@Model.Cart.CalculateTotal()" />
 
+				<input type="hidden" id="typeOfTransaction" name="TypeOfTransaction" value="Online" />
+				<input type="hidden" id="entryMode" name="EntryMode" value="CVC" />
 
+				<div class="row">
+				<div class="col-md-6 mb-3">
+				<label for="countryOfTransaction">Country of Transaction:</label>
+				<select id="countryOfTransaction" name="CountryOfTransaction" required class="form-control">
+					<option value="United Kingdom">United Kingdom</option>
+					<option value="USA">USA</option>
+					<option value="India">India</option>
+					<option value="China">China</option>
+					<option value="Russia">Russia</option>
+				</select>
 
-	<input type="hidden" id="date" name="Date" value="@currentDate.ToString("yyyy-MM-dd")" />
-	<input type="hidden" id="dayOfWeek" name="DayOfWeek" value="@currentDayOfWeek" />
-	<input type="hidden" id="time" name="Time" value="@currentTime" />
+				</div>
+				<div class="col-md-6 mb-3">
+				<label for="shippingAddress">Shipping Address:</label>
+				<select id="shippingAddress" name="ShippingAddress" required class="form-control">
+					<option value="United Kingdom">United Kingdom</option>
+					<option value="USA">USA</option>
+					<option value="India">India</option>
+					<option value="China">China</option>
+					<option value="Russia">Russia</option>
+				</select>
 
-	@* <label for="amount">Amount:</label> *@
-
-
-
-	<input type="hidden" id="amount" name="Amount" value="@Model.Cart.CalculateTotal()" />
-
-	<input type="hidden" id="typeOfTransaction" name="TypeOfTransaction" value="Online" />
-	<input type="hidden" id="entryMode" name="EntryMode" value="CVC" />
-
-
-	<label for="countryOfTransaction">Country of Transaction:</label>
-	<select id="countryOfTransaction" name="CountryOfTransaction" required>
-		<option value="United Kingdom">United Kingdom</option>
-		<option value="USA">USA</option>
-		<option value="India">India</option>
-		<option value="China">China</option>
-		<option value="Russia">Russia</option>
-	</select>
-
-	<label for="shippingAddress">Shipping Address:</label>
-	<select id="shippingAddress" name="ShippingAddress" required>
-		<option value="United Kingdom">United Kingdom</option>
-		<option value="USA">USA</option>
-		<option value="India">India</option>
-		<option value="China">China</option>
-		<option value="Russia">Russia</option>
-	</select>
-
-	<label for="bank">Bank:</label>
-	<select id="bank" name="Bank" required>
-		<option value="">Select a bank</option>
-		<option value="RBS">RBS</option>
-		<option value="Lloyds">Lloyds</option>
-		<option value="Barclays">Barclays</option>
-		<option value="Halifax">Halifax</option>
-		<option value="Monzo">Monzo</option>
-		<option value="HSBC">HSBC</option>
-		<option value="Metro">Metro</option>
-	</select>
-
-	<label for="typeOfCard">Type of Card:</label>
-	<select id="typeOfCard" name="TypeOfCard" required>
-		<option value="">Select a type of card</option>
-		<option value="Visa">Visa</option>
-		<option value="MasterCard">MasterCard</option>
-	</select>
-
-
-	<button type="submit">Submit</button>
-</form>
+				</div>
+				<div class="col-md-6 mb-3">
+				<label for="bank">Bank:</label>
+				<select id="bank" name="Bank" required class="form-control">
+					<option value="">Select a bank</option>
+					<option value="RBS">RBS</option>
+					<option value="Lloyds">Lloyds</option>
+					<option value="Barclays">Barclays</option>
+					<option value="Halifax">Halifax</option>
+					<option value="Monzo">Monzo</option>
+					<option value="HSBC">HSBC</option>
+					<option value="Metro">Metro</option>
+				</select>
+					</div>
+					<div class="col-md-6 mb-3">
+				<label for="typeOfCard">Type of Card:</label>
+				<select id="typeOfCard" name="TypeOfCard" required class="form-control">
+					<option value="">Select a type of card</option>
+					<option value="Visa">Visa</option>
+					<option value="MasterCard">MasterCard</option>
+				</select>
+					</div>
+		
+        
+		
+				<button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<br />
