@@ -62,19 +62,6 @@ namespace Brickwell.Pages
                 return RedirectToPage(new { returnUrl = returnUrl });
             }
         }
-  //      public IActionResult OnDelete(int productId)
-  //      {
-  //          Product prod = _brickRepository.Products
-  //              .FirstOrDefault(x => x.ProductId == productId);
-
-  //          if (prod != null) 
-  //          {
-  //              Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
-  //              Cart.RemoveLine(prod);
-  //              HttpContext.Session.SetJson("cart", Cart);
-  //              return RedirectToPage(new { returnUrl = ReturnUrl });
-  //          }
-		//	return RedirectToPage(new { returnUrl = ReturnUrl });
-		//}
+  //      
     }
 }

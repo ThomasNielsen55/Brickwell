@@ -12,6 +12,7 @@ using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
 using Microsoft.Identity.Client;
 using System.Drawing.Printing;
+using Brickwell.Infrastructure;
 
 namespace BrickedUpBrickBuyer.Controllers
 {
@@ -57,7 +58,14 @@ namespace BrickedUpBrickBuyer.Controllers
         }
 		public IActionResult GetCheckout()
 		{
-			return View();
+            var viewModel = new CartCustomerOrderViewModel
+            {
+                Cart = HttpContext.Session.GetJson<Cart>("cart"),
+                Products = _brickRepository.Products,
+                Orders = _brickRepository.Orders,
+                Customers = _brickRepository.Customers
+            };
+			return View(viewModel);
 		}
 		[HttpGet]
         public IActionResult Cart()
