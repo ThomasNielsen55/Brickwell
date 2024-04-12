@@ -13,6 +13,7 @@ using Microsoft.ML.OnnxRuntime.Tensors;
 using Microsoft.Identity.Client;
 using System.Drawing.Printing;
 using Brickwell.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BrickedUpBrickBuyer.Controllers
 {
@@ -40,10 +41,18 @@ namespace BrickedUpBrickBuyer.Controllers
 
 
 
-        public IActionResult Index()
+        public IActionResult Index(int custid = 456)
         {
-            var Bricks = _brickRepository.Customers.ToList();
 
+            var Bricks = new HomePageViewModel
+            {
+                Products = _brickRepository.Products,
+                            
+                Customers = _brickRepository.Customers,
+                CurrentCustomer = _brickRepository.Customers.ToList()
+                                    .Where(x => x.customer_ID == custid)
+                                    .FirstOrDefault()
+            };
 
             return View(Bricks);
         }
@@ -56,7 +65,8 @@ namespace BrickedUpBrickBuyer.Controllers
         {
             return View();
         }
-		public IActionResult GetCheckout()
+        [Authorize(Roles = "Manager")]
+        public IActionResult GetCheckout()
 		{
             var viewModel = new CartCustomerOrderViewModel
             {
@@ -67,7 +77,8 @@ namespace BrickedUpBrickBuyer.Controllers
             };
 			return View(viewModel);
 		}
-		[HttpGet]
+        [Authorize(Roles = "Manager")]
+        [HttpGet]
         public IActionResult Cart()
         {
             return View();
@@ -105,10 +116,12 @@ namespace BrickedUpBrickBuyer.Controllers
         {
             return View();
         }
+        [Authorize(Roles = "Manager")]
         public IActionResult Confirmation()
         {
             return View();
         }
+        [Authorize(Roles = "Manager")]
         public IActionResult Review()
         {
             return View();
@@ -124,24 +137,26 @@ namespace BrickedUpBrickBuyer.Controllers
         }
         public IActionResult SelectedProduct(int productnum = 1)
         {
-            var Productguy = new Product();
-            Productguy = _brickRepository.Products.ToList()
+            var Productguy = new ProductViewdude {
+                selectedProduct = _brickRepository.Products.ToList()
                 .Where(x => x.ProductId == productnum)
-                .FirstOrDefault();
+                .FirstOrDefault(),
+                Products = _brickRepository.Products,
+            };
 
             return View(Productguy);
         }
 
-        public IActionResult Test(int ordernum = 737060)
-        {
-            var orderguy = new Order();
-            orderguy = _brickRepository.Orders.ToList()
-                .Where(x => x.TransactionId == ordernum)
-                .FirstOrDefault();
+        //public IActionResult Test(int ordernum = 737060)
+        //{
+        //    var orderguy = new Order();
+        //    orderguy = _brickRepository.Orders.ToList()
+        //        .Where(x => x.TransactionId == ordernum)
+        //        .FirstOrDefault();
 
-            return View(orderguy);
-        }
-
+        //    return View(orderguy);
+        //}
+        [Authorize(Roles = "Manager")]
         [HttpPost]
         public IActionResult Orders(Order bag) 
         {
