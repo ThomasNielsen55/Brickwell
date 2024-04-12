@@ -1,42 +1,305 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+
+
+@{
     ViewData["Title"] = "Home Page";
 }
-@model List<Customer>
-@* @model HomePageViewModel
-<div style="margin: 4px, 4px; padding: 4px; background-color: #FFF9D6; overflow-x: auto; overflow-y: hidden; white-space: nowrap;">
+
+@model HomePageViewModel
+<div class="container" style=" background-color: #FFF9D6; overflow-x: auto; overflow-y: hidden; white-space: nowrap;">
+    
     <img src="~/img/recommendedforyou.png" />
-    @for (int i = 0; i < 5; i++)
-    {
+    <div style="white-space: nowrap; overflow-x: auto; overflow-y: hidden;">
+        <div class="col-1"></div>
+        @if (SignInManager.IsSignedIn(User))
+{
         @foreach (var x in Model.Products)
+    {
+        if (x.ProductId == Model.CurrentCustomer.recommendation_1)
         {
-            if (x.ProductId == Model.CurrentCustomer.Recommendation[i])
-            {
-                <div class="col-4">
-                    <div style="box-shadow: 0 4px 4px 0 rgba(0,0,0,0.2); transition: 0.3s; margin: 2px; color: white; background-color: #272D6D;">
-                        <img src="@x.ImgLink" alt="Product picture" class="img-fluid">
-                        <div class="container" style="padding: 2px 2px;">
-                            <h4><b>@x.Name</b></h4>
-                            <div class="row">
-                                <div class="col-7">
-                                    <p>
-                                        @x.Category<br />
-                                        Pieces: @x.NumParts<br />
-                                        Price: $@x.Price
-                                    </p>
-                                </div>
-                                <div class="col-5">
-                                    <a method="get" asp-controller="Home" asp-action="SelectedProduct" asp-route-productnum="@x.ProductId">
-                                        <div style="background-color: #FFD700; border: solid; border-color: #E3000B; color: black; padding: 5px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 5px;">View Item</div>
-                                    </a>
-                                </div>
+                <div class="col-3" style="display: inline-block; float: none;">
+                <div style="box-shadow: 0 4px 4px 0 rgba(0,0,0,0.2); transition: 0.3s; margin: 2px; color: white; background-color: #272D6D;">
+                    <img src="@x.ImgLink" alt="Product picture" class="img-fluid">
+                    <div class="container" style="padding: 2px 2px;">
+                        <h4><b>@x.Name</b></h4>
+                        <div class="row">
+                            <div class="col-7">
+                                <p>
+                                    @x.Category<br />
+                                    Pieces: @x.NumParts<br />
+                                    Price: $@x.Price
+                                </p>
+                            </div>
+                            <div class="col-5">
+                                <a method="get" asp-controller="Home" asp-action="SelectedProduct" asp-route-productnum="@x.ProductId">
+                                    <div style="background-color: #FFD700; border: solid; border-color: #E3000B; color: black; padding: 5px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 5px;">View Item</div>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
-            }
-
+            </div>
         }
-    } *@
+    }
+    @foreach (var x in Model.Products)
+    {
+        if (x.ProductId == Model.CurrentCustomer.recommendation_2)
+        {
+                <div class="col-3" style="display: inline-block; float: none;">
+                <div style="box-shadow: 0 4px 4px 0 rgba(0,0,0,0.2); transition: 0.3s; margin: 2px; color: white; background-color: #272D6D;">
+                    <img src="@x.ImgLink" alt="Product picture" class="img-fluid">
+                    <div class="container" style="padding: 2px 2px;">
+                        <h4><b>@x.Name</b></h4>
+                        <div class="row">
+                            <div class="col-7">
+                                <p>
+                                    @x.Category<br />
+                                    Pieces: @x.NumParts<br />
+                                    Price: $@x.Price
+                                </p>
+                            </div>
+                            <div class="col-5">
+                                <a method="get" asp-controller="Home" asp-action="SelectedProduct" asp-route-productnum="@x.ProductId">
+                                    <div style="background-color: #FFD700; border: solid; border-color: #E3000B; color: black; padding: 5px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 5px;">View Item</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    @foreach (var x in Model.Products)
+    {
+        if (x.ProductId == Model.CurrentCustomer.recommendation_3)
+        {
+                <div class="col-3" style="display: inline-block; float: none;">
+                <div style="box-shadow: 0 4px 4px 0 rgba(0,0,0,0.2); transition: 0.3s; margin: 2px; color: white; background-color: #272D6D;">
+                    <img src="@x.ImgLink" alt="Product picture" class="img-fluid">
+                    <div class="container" style="padding: 2px 2px;">
+                        <h4><b>@x.Name</b></h4>
+                        <div class="row">
+                            <div class="col-7">
+                                <p>
+                                    @x.Category<br />
+                                    Pieces: @x.NumParts<br />
+                                    Price: $@x.Price
+                                </p>
+                            </div>
+                            <div class="col-5">
+                                <a method="get" asp-controller="Home" asp-action="SelectedProduct" asp-route-productnum="@x.ProductId">
+                                    <div style="background-color: #FFD700; border: solid; border-color: #E3000B; color: black; padding: 5px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 5px;">View Item</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    @foreach (var x in Model.Products)
+    {
+        if (x.ProductId == Model.CurrentCustomer.recommendation_4)
+        {
+                <div class="col-3" style="display: inline-block; float: none;">
+                <div style="box-shadow: 0 4px 4px 0 rgba(0,0,0,0.2); transition: 0.3s; margin: 2px; color: white; background-color: #272D6D;">
+                    <img src="@x.ImgLink" alt="Product picture" class="img-fluid">
+                    <div class="container" style="padding: 2px 2px;">
+                        <h4><b>@x.Name</b></h4>
+                        <div class="row">
+                            <div class="col-7">
+                                <p>
+                                    @x.Category<br />
+                                    Pieces: @x.NumParts<br />
+                                    Price: $@x.Price
+                                </p>
+                            </div>
+                            <div class="col-5">
+                                <a method="get" asp-controller="Home" asp-action="SelectedProduct" asp-route-productnum="@x.ProductId">
+                                    <div style="background-color: #FFD700; border: solid; border-color: #E3000B; color: black; padding: 5px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 5px;">View Item</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    @foreach (var x in Model.Products)
+    {
+        if (x.ProductId == Model.CurrentCustomer.recommendation_5)
+        {
+                <div class="col-3" style="display: inline-block; float: none;">
+                <div style="box-shadow: 0 4px 4px 0 rgba(0,0,0,0.2); transition: 0.3s; margin: 2px; color: white; background-color: #272D6D;">
+                    <img src="@x.ImgLink" alt="Product picture" class="img-fluid">
+                    <div class="container" style="padding: 2px 2px;">
+                        <h4><b>@x.Name</b></h4>
+                        <div class="row">
+                            <div class="col-7">
+                                <p>
+                                    @x.Category<br />
+                                    Pieces: @x.NumParts<br />
+                                    Price: $@x.Price
+                                </p>
+                            </div>
+                            <div class="col-5">
+                                <a method="get" asp-controller="Home" asp-action="SelectedProduct" asp-route-productnum="@x.ProductId">
+                                    <div style="background-color: #FFD700; border: solid; border-color: #E3000B; color: black; padding: 5px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 5px;">View Item</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+else
+{       @foreach (var x in Model.Products)
+    {
+        if (x.ProductId == 36)
+        {
+            <div class="col-3" style="display: inline-block; float: none;">
+                <div style="box-shadow: 0 4px 4px 0 rgba(0,0,0,0.2); transition: 0.3s; margin: 2px; color: white; background-color: #272D6D;">
+                    <img src="@x.ImgLink" alt="Product picture" class="img-fluid" style>
+                    <div class="container" style="padding: 2px 2px;">
+                        <h4><b>@x.Name</b></h4>
+                        <div class="row">
+                            <div class="col-7">
+                                <p>
+                                    @x.Category<br />
+                                    Pieces: @x.NumParts<br />
+                                    Price: $@x.Price
+                                </p>
+                            </div>
+                            <div class="col-5">
+                                <a method="get" asp-controller="Home" asp-action="SelectedProduct" asp-route-productnum="@x.ProductId">
+                                    <div style="background-color: #FFD700; border: solid; border-color: #E3000B; color: black; padding: 5px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 5px;">View Item</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    @foreach (var x in Model.Products)
+    {
+        if (x.ProductId ==1)
+        {
+            <div class="col-3" style="display: inline-block; float: none;">
+                <div style="box-shadow: 0 4px 4px 0 rgba(0,0,0,0.2); transition: 0.3s; margin: 2px; color: white; background-color: #272D6D;">
+                    <img src="@x.ImgLink" alt="Product picture" class="img-fluid">
+                    <div class="container" style="padding: 2px 2px;">
+                        <h4><b>@x.Name</b></h4>
+                        <div class="row">
+                            <div class="col-7">
+                                <p>
+                                    @x.Category<br />
+                                    Pieces: @x.NumParts<br />
+                                    Price: $@x.Price
+                                </p>
+                            </div>
+                            <div class="col-5">
+                                <a method="get" asp-controller="Home" asp-action="SelectedProduct" asp-route-productnum="@x.ProductId">
+                                    <div style="background-color: #FFD700; border: solid; border-color: #E3000B; color: black; padding: 5px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 5px;">View Item</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    @foreach (var x in Model.Products)
+    {
+        if (x.ProductId == 4)
+        {
+            <div class="col-3" style="display: inline-block; float: none;">
+                <div style="box-shadow: 0 4px 4px 0 rgba(0,0,0,0.2); transition: 0.3s; margin: 2px; color: white; background-color: #272D6D;">
+                    <img src="@x.ImgLink" alt="Product picture" class="img-fluid">
+                    <div class="container" style="padding: 2px 2px;">
+                        <h4><b>@x.Name</b></h4>
+                        <div class="row">
+                            <div class="col-7">
+                                <p>
+                                    @x.Category<br />
+                                    Pieces: @x.NumParts<br />
+                                    Price: $@x.Price
+                                </p>
+                            </div>
+                            <div class="col-5">
+                                <a method="get" asp-controller="Home" asp-action="SelectedProduct" asp-route-productnum="@x.ProductId">
+                                    <div style="background-color: #FFD700; border: solid; border-color: #E3000B; color: black; padding: 5px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 5px;">View Item</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    @foreach (var x in Model.Products)
+    {
+        if (x.ProductId == 35)
+        {
+            <div class="col-3" style="display: inline-block; float: none;">
+                <div style="box-shadow: 0 4px 4px 0 rgba(0,0,0,0.2); transition: 0.3s; margin: 2px; color: white; background-color: #272D6D;">
+                    <img src="@x.ImgLink" alt="Product picture" class="img-fluid">
+                    <div class="container" style="padding: 2px 2px;">
+                        <h4><b>@x.Name</b></h4>
+                        <div class="row">
+                            <div class="col-7">
+                                <p>
+                                    @x.Category<br />
+                                    Pieces: @x.NumParts<br />
+                                    Price: $@x.Price
+                                </p>
+                            </div>
+                            <div class="col-5">
+                                <a method="get" asp-controller="Home" asp-action="SelectedProduct" asp-route-productnum="@x.ProductId">
+                                    <div style="background-color: #FFD700; border: solid; border-color: #E3000B; color: black; padding: 5px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 5px;">View Item</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    @foreach (var x in Model.Products)
+    {
+        if (x.ProductId == 10)
+        {
+            <div class="col-3" style="display: inline-block; float: none;">
+                <div style="box-shadow: 0 4px 4px 0 rgba(0,0,0,0.2); transition: 0.3s; margin: 2px; color: white; background-color: #272D6D;">
+                    <img src="@x.ImgLink" alt="Product picture" class="img-fluid">
+                    <div class="container" style="padding: 2px 2px;">
+                        <h4><b>@x.Name</b></h4>
+                        <div class="row">
+                            <div class="col-7">
+                                <p>
+                                    @x.Category<br />
+                                    Pieces: @x.NumParts<br />
+                                    Price: $@x.Price
+                                </p>
+                            </div>
+                            <div class="col-5">
+                                <a method="get" asp-controller="Home" asp-action="SelectedProduct" asp-route-productnum="@x.ProductId">
+                                    <div style="background-color: #FFD700; border: solid; border-color: #E3000B; color: black; padding: 5px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 5px;">View Item</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+    </div>
 </div>
 <div class="container">
 

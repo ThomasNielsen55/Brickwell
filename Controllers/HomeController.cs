@@ -40,10 +40,18 @@ namespace BrickedUpBrickBuyer.Controllers
 
 
 
-        public IActionResult Index()
+        public IActionResult Index(int custid = 456)
         {
-            var Bricks = _brickRepository.Customers.ToList();
 
+            var Bricks = new HomePageViewModel
+            {
+                Products = _brickRepository.Products,
+                            
+                Customers = _brickRepository.Customers,
+                CurrentCustomer = _brickRepository.Customers.ToList()
+                                    .Where(x => x.customer_ID == custid)
+                                    .FirstOrDefault()
+            };
 
             return View(Bricks);
         }
@@ -124,10 +132,12 @@ namespace BrickedUpBrickBuyer.Controllers
         }
         public IActionResult SelectedProduct(int productnum = 1)
         {
-            var Productguy = new Product();
-            Productguy = _brickRepository.Products.ToList()
+            var Productguy = new ProductViewdude {
+                selectedProduct = _brickRepository.Products.ToList()
                 .Where(x => x.ProductId == productnum)
-                .FirstOrDefault();
+                .FirstOrDefault(),
+                Products = _brickRepository.Products,
+            };
 
             return View(Productguy);
         }
