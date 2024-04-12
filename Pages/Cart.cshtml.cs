@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Brickwell.Data;
 using Brickwell.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Brickwell.Pages
 {
-    public class CartModel : PageModel
+	[Authorize(Roles = "Manager")]
+	public class CartModel : PageModel
     {
         private IBrickRepository _brickRepository;
         public CartModel(IBrickRepository temp) 
