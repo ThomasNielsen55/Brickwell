@@ -239,6 +239,7 @@ namespace BrickedUpBrickBuyer.Controllers
 
             if (Fraud == 0)
             {
+                //order.Fraud = false;
                 //_brickRepository.AddOrder(order);
                 return View("Confirmation");
             }
