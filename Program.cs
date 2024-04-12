@@ -92,6 +92,31 @@ public class Program
         app.UseStaticFiles();
         app.UseCookiePolicy();
 
+        app.Use(async (context, next) =>
+        {
+            context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+            context.Response.Headers.Add("X-XSS-Protection", "1; mode=block");
+            context.Response.Headers.Add("Referrer-Policy", "no-referrer");
+
+            string csp = "default-src 'self'; " +
+             "script-src 'self' 'unsafe-inline'; " +
+             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+             "img-src 'self' 'unsafe-inline' data: " +
+             "https://m.media-amazon.com " +
+             "https://www.lego.com " +
+             "https://images.brickset.com " +
+             "https://www.brickeconomy.com; " +  // Added image sources here
+             "font-src 'self' https://fonts.gstatic.com;";
+
+
+            if (!context.Response.Headers.ContainsKey("Content-Security-Policy"))
+            {
+                context.Response.Headers.Add("Content-Security-Policy", csp);
+            }
+
+            await next();
+        });
+
         app.UseSession();
 
         app.UseRouting();
@@ -122,19 +147,7 @@ public class Program
             var userManager =
                 scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
-            string email = "admin@admin.com";
-            string password = "Test1234567890!,";
-
-            if (await userManager.FindByEmailAsync(email) == null)
-            {
-                var user = new IdentityUser();
-                user.UserName = email;
-                user.Email = email;
-
-                await userManager.CreateAsync(user, password);
-
-                await userManager.AddToRoleAsync(user, "Admin");
-            }
+           
         }
 
         app.MapRazorPages();
