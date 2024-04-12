@@ -55,7 +55,11 @@ namespace BrickedUpBrickBuyer.Controllers
         {
             return View();
         }
-        [HttpGet]
+		public IActionResult GetCheckout()
+		{
+			return View();
+		}
+		[HttpGet]
         public IActionResult Cart()
         {
             return View();
