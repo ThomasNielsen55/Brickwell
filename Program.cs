@@ -2,7 +2,6 @@ using Brickwell.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NetEscapades.AspNetCore.SecurityHeaders;
-using Brickwell.CustomMiddleware;
 using Brickwell.Components;
 
 
@@ -16,11 +15,22 @@ public class Program
         var services = builder.Services;
         var configuration = builder.Configuration;
 
-        services.AddAuthentication().AddGoogle(googleOptions =>
-        {
-            googleOptions.ClientId = configuration["Authentication__Google__ClientId"];
-            googleOptions.ClientSecret = configuration["Authentication__Google__ClientSecret"];
-        });
+        var googleClientId = builder.Configuration["Authentication__Google__ClientId"];
+        var googleClientSecret = builder.Configuration["Authentication__Google__ClientSecret"];
+        Console.WriteLine($"Google Client ID: { googleClientId}");
+        Console.WriteLine($"Google Client Secret: { googleClientSecret}");
+        builder.Services.AddAuthentication()
+          .AddGoogle(options =>
+          {
+              options.ClientId = googleClientId;
+              options.ClientSecret = googleClientSecret;
+          });
+
+        //services.AddAuthentication().AddGoogle(googleOptions =>
+        //{
+        //    googleOptions.ClientId = configuration["Authentication__Google__ClientId"];
+        //    googleOptions.ClientSecret = configuration["Authentication__Google__ClientSecret"];
+        //});
 
         builder.Services.Configure<CookiePolicyOptions>(options =>
         {
@@ -71,9 +81,6 @@ public class Program
 
 
         var app = builder.Build();
-
-
-        app.UseMiddleware<ContentSecurityPolicyMiddleware>();
 
 
         // Configure the HTTP request pipeline.
