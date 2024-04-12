@@ -4,9 +4,9 @@ namespace Brickwell.Data.ViewModels
 {
 	public class CartCustomerOrderViewModel
 	{
-		public IQueryable<Order>? Orders { get; set; }
-		public IQueryable<Customer>? Customers { get; set; }
-		public IQueryable<Product>? Products { get; set; }
+		public Order Order { get; set; }
+		public Customer Customer { get; set; }
+		public Product Product { get; set; }
 		public Cart? Cart { get; set; }
 	}
 }

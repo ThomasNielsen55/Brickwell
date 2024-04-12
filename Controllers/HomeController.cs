@@ -61,9 +61,9 @@ namespace BrickedUpBrickBuyer.Controllers
             var viewModel = new CartCustomerOrderViewModel
             {
                 Cart = HttpContext.Session.GetJson<Cart>("cart"),
-                Products = _brickRepository.Products,
-                Orders = _brickRepository.Orders,
-                Customers = _brickRepository.Customers
+                //Products = _brickRepository.Products,
+                //Orders = _brickRepository.Orders,
+                //Customers = _brickRepository.Customers
             };
 			return View(viewModel);
 		}
@@ -142,12 +142,13 @@ namespace BrickedUpBrickBuyer.Controllers
             return View(orderguy);
         }
 
-        public IActionResult Orders(int ordernum) 
+        [HttpPost]
+        public IActionResult Orders(Order bag) 
         {
-            var order = new Order();
-            order = _brickRepository.Orders.ToList()
-                .Where(x => x.TransactionId == ordernum)
-                .FirstOrDefault();
+            //var order = new Order();
+            //order = _brickRepository.Orders.ToList()
+            //    .Where(x => x.TransactionId == ordernum)
+            //    .FirstOrDefault();
             //var records = (from order in _brickRepository.Orders
             //               join customer in _brickRepository.Customers
             //               on order.CustomerId equals customer.customer_ID
@@ -160,13 +161,28 @@ namespace BrickedUpBrickBuyer.Controllers
 
             //   var predictions = new List<OrderPrediction>(); // Need to figure out what this will be...
 
-            var record = new RecordViewModel()
-            {
-                Order = order,
-                Customer = _brickRepository.Customers
-                .Where(x => x.customer_ID == order.CustomerId)
-                .FirstOrDefault()
-            };
+            //var record = new RecordViewModel()
+            //{
+            //    Order = order,
+            //    Customer = _brickRepository.Customers
+            //    .Where(x => x.customer_ID == order.CustomerId)
+            //    .FirstOrDefault()
+            //};
+            Order Order = new Order();
+            Order = bag;
+
+            //order.Fraud = 0; 
+            //order.ShippingAddress=bag.Order.
+            //bag.Order.Fraud = false;
+
+
+
+
+            var Customer = _brickRepository.Customers
+            .Where(x => x.customer_ID == 13)
+            .FirstOrDefault();
+
+
 
 
             var class_type_dict = new Dictionary<int, string>
@@ -180,49 +196,54 @@ namespace BrickedUpBrickBuyer.Controllers
             // Make the data compatible with the models
             var input = new List<float>
                 {
-                    (float)record.Customer.age,
-                    (float)record.Order.Time,
-                    (float)(record.Order.Amount),
+
+					Customer.age.HasValue ? (float)Customer.age.Value : 0,
+    
+    // Check if Order.Time is not null before accessing its Value property
+    Order.Time.HasValue ? (float)Order.Time.Value : 0,
+    
+    // Check if Order.Amount is not null before accessing its Value property
+    Order.Amount.HasValue ? (float)Order.Amount.Value : 0,
 
                     // Check the dummy data
-                    record.Customer.country_of_residence == "India" ? 1 : 0,
-                    record.Customer.country_of_residence == "Russia" ? 1 : 0,
-                    record.Customer.country_of_residence == "USA" ? 1 : 0,
-                    record.Customer.country_of_residence == "UnitedKingdom" ? 1 : 0,
+                    Customer.country_of_residence == "India" ? 1 : 0,
+                    Customer.country_of_residence == "Russia" ? 1 : 0,
+                    Customer.country_of_residence == "USA" ? 1 : 0,
+                    Customer.country_of_residence == "UnitedKingdom" ? 1 : 0,
 
-                    record.Customer.gender == "M" ? 1 : 0,
+                    Customer.gender == "M" ? 1 : 0,
 
-                    record.Order.DayOfWeek == "Mon" ? 1 : 0,
-                    record.Order.DayOfWeek == "Sat" ? 1 : 0,
-                    record.Order.DayOfWeek == "Sun" ? 1 : 0,
-                    record.Order.DayOfWeek == "Thu" ? 1 : 0,
-                    record.Order.DayOfWeek == "Tue" ? 1 : 0,
-                    record.Order.DayOfWeek == "Wed" ? 1 : 0,
+                    Order.DayOfWeek == "Mon" ? 1 : 0,
+                    Order.DayOfWeek == "Sat" ? 1 : 0,
+                    Order.DayOfWeek == "Sun" ? 1 : 0,
+                    Order.DayOfWeek == "Thu" ? 1 : 0,
+                    Order.DayOfWeek == "Tue" ? 1 : 0,
+                    Order.DayOfWeek == "Wed" ? 1 : 0,
 
-                    record.Order.EntryMode == "PIN" ? 1 : 0,
-                    record.Order.EntryMode == "Tap" ? 1 : 0,
+                    Order.EntryMode == "PIN" ? 1 : 0,
+                    Order.EntryMode == "Tap" ? 1 : 0,
 
-                    record.Order.TypeOfTransaction == "Online" ? 1 : 0,
-                    record.Order.TypeOfTransaction == "POS" ? 1 : 0,
+                    Order.TypeOfTransaction == "Online" ? 1 : 0,
+                    Order.TypeOfTransaction == "POS" ? 1 : 0,
 
-                    record.Order.CountryOfTransaction == "India" ? 1 : 0,
-                    record.Order.CountryOfTransaction == "Russia" ? 1 : 0,
-                    record.Order.CountryOfTransaction == "USA" ? 1 : 0,
-                    record.Order.CountryOfTransaction == "UnitedKingdom" ? 1 : 0,
+                    Order.CountryOfTransaction == "India" ? 1 : 0,
+                    Order.CountryOfTransaction == "Russia" ? 1 : 0,
+                    Order.CountryOfTransaction == "USA" ? 1 : 0,
+                    Order.CountryOfTransaction == "UnitedKingdom" ? 1 : 0,
 
-                    record.Order.ShippingAddress == "India" ? 1 : 0,
-                    record.Order.ShippingAddress == "Russia" ? 1 : 0,
-                    record.Order.ShippingAddress == "USA" ? 1 : 0,
-                    record.Order.ShippingAddress == "UnitedKingdom" ? 1 : 0,
+                    Order.ShippingAddress == "India" ? 1 : 0,
+                    Order.ShippingAddress == "Russia" ? 1 : 0,
+                    Order.ShippingAddress == "USA" ? 1 : 0,
+                    Order.ShippingAddress == "UnitedKingdom" ? 1 : 0,
                     
-                    record.Order.Bank == "HSBC" ? 1 : 0,
-                    record.Order.Bank == "Halifax" ? 1 : 0,
-                    record.Order.Bank == "Lloyds" ? 1 : 0,
-                    record.Order.Bank == "Metro" ? 1 : 0,
-                    record.Order.Bank == "Monzo" ? 1 : 0,
-                    record.Order.Bank == "RBS" ? 1 : 0,
+                    Order.Bank == "HSBC" ? 1 : 0,
+                    Order.Bank == "Halifax" ? 1 : 0,
+                    Order.Bank == "Lloyds" ? 1 : 0,
+                    Order.Bank == "Metro" ? 1 : 0,
+                    Order.Bank == "Monzo" ? 1 : 0,
+                    Order.Bank == "RBS" ? 1 : 0,
 
-                    record.Order.TypeOfCard == "Visa" ? 1 : 0
+                    Order.TypeOfCard == "Visa" ? 1 : 0
                 };
 
             var inputTensor = new DenseTensor<float>(input.ToArray(), new[] { 1, input.Count });
@@ -251,13 +272,15 @@ namespace BrickedUpBrickBuyer.Controllers
 
             if (Fraud == 0)
             {
-                //_brickRepository.AddOrder(order);
-                return View("Confirmation");
+                Order.Fraud = true;
+                _brickRepository.AddOrder(Order);
+                return View("Review");
             }
             else
             {
-                //_brickRepository.AddOrder(order);
-                return View("Review");
+                Order.Fraud = false;
+                _brickRepository.AddOrder(Order);
+                return View("Confirmation");
             }
             // predictions.Add(new OrderPrediction {Orders = record.Order, Customer = record.Customer});
             //}

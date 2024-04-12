@@ -19,7 +19,6 @@
       <th>Image Link</th>
       <th>Primary Color</th>
       <th>Secondary Color</th>
-      <th>Description</th>
       <th>Category</th>
       <th>Edit</th>
       <th>Delete</th>
@@ -38,7 +37,6 @@
                 <td>@x.ImgLink</td>
                 <td>@x.PrimaryColor</td>  
                 <td>@x.SecondaryColor</td>  
-                <td>@x.Description</td>
                 <td>@x.Category</td>
                 <td><a class="btn btn-info" asp-controller="Admin" asp-action="EditProduct" asp-route-productid="@x.ProductId">Edit</a></td>
                 <td><a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteProductConfirmation" asp-route-productid="@x.ProductId">Delete</a></td>
