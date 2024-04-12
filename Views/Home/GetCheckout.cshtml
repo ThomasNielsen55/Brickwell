@@ -1,5 +1,5 @@
 ﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?Linkasp-for=397860
 *@
 @{
 }
@@ -49,32 +49,32 @@
 		var currentDayOfWeek = currentDate.DayOfWeek.ToString();
 		var currentTime = currentDate.TimeOfDay.TotalSeconds;
 	}
-
-	<input type="hidden" id="customerId" name="CustomerId" value="" />
-	<input type="hidden" id="age" name="Age" value="" />
-	<input type="hidden" id="countryOfResidence" name="CountryOfResidence" value="" />
-	<input type="hidden" id="gender" name="Gender" value="" />
-
-
+@* 
+	<input type="hidden" asp-for="Order.customerId" name="CustomerId" value="1" />
+	<input type="hidden" asp-for="Order.age" name="Age" value="1" />
+	<input type="hidden" asp-for="Order.countryOfResidence" name="CountryOfResidence" value="India" />
+	<input type="hidden" asp-for="Order.gender" name="Gender" value="M" /> *@
 
 
 
-	<input type="hidden" id="date" name="Date" value="@currentDate.ToString("yyyy-MM-dd")" />
-	<input type="hidden" id="dayOfWeek" name="DayOfWeek" value="@currentDayOfWeek" />
-	<input type="hidden" id="time" name="Time" value="@currentTime" />
 
-	@* <label for="amount">Amount:</label> *@
+	<input type="hidden" asp-for="Order.CustomerId" name="CustomerId" value="11" />
+	<input type="hidden" asp-for="Order.Date" name="Date" value="@currentDate.ToString("yyyy-MM-dd")" />
+	<input type="hidden" asp-for="Order.DayOfWeek" name="DayOfWeek" value="@currentDayOfWeek" />
+	<input type="hidden" asp-for="Order.Time" name="Time" value="@currentTime" />
 
-
-
-	<input type="hidden" id="amount" name="Amount" value="@Model.Cart.CalculateTotal()" />
-
-	<input type="hidden" id="typeOfTransaction" name="TypeOfTransaction" value="Online" />
-	<input type="hidden" id="entryMode" name="EntryMode" value="CVC" />
+	@* <label asp-for="Order.amount">Amount:</label> *@
 
 
-	<label for="countryOfTransaction">Country of Transaction:</label>
-	<select id="countryOfTransaction" name="CountryOfTransaction" required>
+	<input type="hidden" asp-for="Order.EntryMode" name="EntryMode" value="CVC" />
+
+	<input type="hidden" asp-for="Order.Amount" name="Amount" value="@Model.Cart.CalculateTotal()" />
+
+	<input type="hidden" asp-for="Order.TypeOfTransaction" name="TypeOfTransaction" value="Online" />
+
+
+	<label asp-for="Order.CountryOfTransaction">Country of Transaction:</label>
+	<select asp-for="Order.CountryOfTransaction" name="CountryOfTransaction" required>
 		<option value="United Kingdom">United Kingdom</option>
 		<option value="USA">USA</option>
 		<option value="India">India</option>
@@ -82,8 +82,8 @@
 		<option value="Russia">Russia</option>
 	</select>
 
-	<label for="shippingAddress">Shipping Address:</label>
-	<select id="shippingAddress" name="ShippingAddress" required>
+	<label asp-for="Order.ShippingAddress">Shipping Address:</label>
+	<select asp-for="Order.ShippingAddress" name="ShippingAddress" required>
 		<option value="United Kingdom">United Kingdom</option>
 		<option value="USA">USA</option>
 		<option value="India">India</option>
@@ -91,8 +91,8 @@
 		<option value="Russia">Russia</option>
 	</select>
 
-	<label for="bank">Bank:</label>
-	<select id="bank" name="Bank" required>
+	<label asp-for="Order.Bank">Bank:</label>
+	<select asp-for="Order.Bank" name="Bank" required>
 		<option value="">Select a bank</option>
 		<option value="RBS">RBS</option>
 		<option value="Lloyds">Lloyds</option>
@@ -103,12 +103,13 @@
 		<option value="Metro">Metro</option>
 	</select>
 
-	<label for="typeOfCard">Type of Card:</label>
-	<select id="typeOfCard" name="TypeOfCard" required>
+	<label asp-for="Order.TypeOfCard">Type of Card:</label>
+	<select asp-for="Order.TypeOfCard" name="TypeOfCard" required>
 		<option value="">Select a type of card</option>
 		<option value="Visa">Visa</option>
 		<option value="MasterCard">MasterCard</option>
 	</select>
+	<input type="hidden" asp-for="Order.Fraud" name="Fraud" value="false" />
 
 
 	<button type="submit">Submit</button>
